@@ -99,6 +99,7 @@ public void wrongEmailCorrectPasswordTest() {
     Assert.assertEquals(webDriver.getCurrentUrl(),
             "https://www.linkedin.com/uas/login-submit",
             "There were one or more errors in your submission. Please correct the marked fields below.");
+    Assert.assertEquals("Please enter a valid email address.", "Please enter a valid email address.");
     webDriver.close();}
 
     @Test
@@ -154,21 +155,54 @@ public void wrongEmailCorrectPasswordTest() {
         Assert.assertEquals("Hmm, we don't recognize that email. Please try again.", "Hmm, we don't recognize that email. Please try again.");
         webDriver.close();}
 
+    @Test
+    public void emptyEmailCorrectPasswordTest() {
+        WebDriver webDriver = new FirefoxDriver();
+        webDriver.get("https://www.linkedin.com/");
+
+        String actualLoginPageTitle = webDriver.getTitle();
+
+        Assert.assertEquals(webDriver.getTitle(),
+                "LinkedIn: Log In or Sign Up",
+                "Login page Title is wrong");
+
+
+        WebElement emptyEmailField=webDriver.findElement(By.id("login-email"));
+        emptyEmailField.sendKeys("");
+
+        WebElement correctPasswordField =webDriver.findElement(By.id("login-password"));
+        correctPasswordField.sendKeys("201101");
+
+        WebElement signInButton =webDriver.findElement(By.id("login-submit"));
+        signInButton.click();
+
+        Assert.assertEquals(webDriver.getCurrentUrl(),"https://www.linkedin.com/");
+
+        webDriver.close();}
+
+    @Test
+    public void correctEmailEmptyPasswordTest() {
+        WebDriver webDriver = new FirefoxDriver();
+        webDriver.get("https://www.linkedin.com/");
+
+        String actualLoginPageTitle = webDriver.getTitle();
+
+        Assert.assertEquals(webDriver.getTitle(),
+                "LinkedIn: Log In or Sign Up",
+                "Login page Title is wrong");
+
+
+        WebElement correctEmailField=webDriver.findElement(By.id("login-email"));
+        correctEmailField.sendKeys("");
+
+        WebElement emptyPasswordField =webDriver.findElement(By.id("login-password"));
+        emptyPasswordField.sendKeys("201101");
+
+        WebElement signInButton =webDriver.findElement(By.id("login-submit"));
+        signInButton.click();
+
+        Assert.assertEquals(webDriver.getCurrentUrl(),"https://www.linkedin.com/");
+
+        webDriver.close();}
     }
-       /*WebElement correctEmailField = webDriver.findElement(By.id("login-email"));
-       correctEmailField.sendKeys("db.hideez@gmail.com");
-
-       WebElement wrongPasswordField = webDriver.findElement(By.id("login-password"));
-       wrongPasswordField.sendKeys("111111");
-
-    WebElement signInButton = webDriver.findElement(By.id("login-submit"));
-    signInButton.click();
-
-    Assert.assertEquals(webDriver.getCurrentUrl(),
-            "https://www.linkedin.com/uas/login-submit",
-            "There were one or more errors in your submission. Please correct the marked fields below.");
-    Assert.assertTrue(webDriver.getPageSource().contains("Hmm, that's not the right password"),
-            "Home page url is wrong.");
-
-    webDriver.close();*/
 
