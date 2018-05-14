@@ -123,11 +123,8 @@ public void wrongEmailCorrectPasswordTest() {
         WebElement signInButton =webDriver.findElement(By.id("login-submit"));
         signInButton.click();
 
-        Assert.assertEquals(webDriver.getCurrentUrl(),
-                "https://www.linkedin.com/uas/login-submit",
-                "There were one or more errors in your submission.Please correct the marked fields below.");
+        String actualString = webDriver.findElement(By.xpath("//*[@id=\"global-alert-queue\"]")).getText();
         webDriver.close();}
-
     @Test
     public void wrongEmailWrongPasswordTest() {
         WebDriver webDriver = new FirefoxDriver();
@@ -152,7 +149,8 @@ public void wrongEmailCorrectPasswordTest() {
         Assert.assertEquals(webDriver.getCurrentUrl(),
                 "https://www.linkedin.com/uas/login-submit",
                 "There were one or more errors in your submission.Please correct the marked fields below.");
-        Assert.assertEquals("Hmm, we don't recognize that email. Please try again.", "Hmm, we don't recognize that email. Please try again.");
+
+        String actualString = webDriver.findElement(By.xpath("//*[@id=\"session_password-login-error\"]")).getText();
         webDriver.close();}
 
     @Test
@@ -206,4 +204,3 @@ public void wrongEmailCorrectPasswordTest() {
         webDriver.close();}
     }
 
-//
