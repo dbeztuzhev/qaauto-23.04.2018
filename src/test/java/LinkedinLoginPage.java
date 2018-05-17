@@ -2,38 +2,40 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-class LinkedinLoginPage {
+public class LinkedinLoginPage {
     private WebDriver webDriver;
 
-    private WebElement EmailField = webDriver.findElement(By.id("login-email"));
-    private WebElement PasswordField = webDriver.findElement(By.id("login-password"));
-    private WebElement SignInButton = webDriver.findElement(By.id("login-submit"));
+    private WebElement emailField;
+    private WebElement passwordField;
+    private WebElement signInButton;
 
-    public Boolean login(String email, String password) {
-        EmailField.sendKeys(email);
-        PasswordField.sendKeys(password);
-
-        Boolean SignInButtonDisplayed = null;
-        {
-            SignInButton.click();
-        }
-
-        /*Boolean signInButton;
-        {
-            {
-                boolean resut = false;
-                Boolean result = signInButton();
-                return result;
-            }
-        }
+    public LinkedinLoginPage(WebDriver webDriver) {
+        this.webDriver = webDriver;
+        initElements();
     }
 
-    private Boolean signInButton() {
+    public void initElements() {
+        emailField = webDriver.findElement(By.id("login-email"));
+        passwordField = webDriver.findElement(By.id("login-password"));
+        signInButton = webDriver.findElement(By.id("login-submit"));
+    }
 
-        return null;
-    }*/
+    public void login(String email, String password) {
+        emailField.sendKeys(email);
+        passwordField.sendKeys(password);
+        signInButton.click();
+    }
 
-        return SignInButtonDisplayed;
+    public boolean isSignInButtonDisplayed () {
+        return signInButton.isDisplayed();
+
+    }
+
+    public String getCurrentUrl() {
+        return webDriver.getCurrentUrl();
+    }
+    public String getCurrentTitle() {
+        return webDriver.getTitle();
     }
 }
 
