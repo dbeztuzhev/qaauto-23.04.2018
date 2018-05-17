@@ -2,7 +2,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -21,7 +20,7 @@ public class LinkedinLoginTest {
     }
 
     @Test
-    public LinkedinLoginTest successfulLoginTest(WebElement signInButton) {
+    public void successfulLoginTest(WebElement signInButton) {
 
         String actualLoginPageTitle = webDriver.getTitle();
 
@@ -35,11 +34,8 @@ public class LinkedinLoginTest {
         linkedinLoginPage.login("db.hideez#gmail.com", "201101");
 
         signInButton.click();
-        LinkedinLoginTest h = new LinkedinLoginTest();
-        return h;
 
-
-        Assert.assertTrue(signInButton.isDisplayed(), "Sign In button is not Displayed");
+        LinkedinLoginPage.Assert.assertTrue(signInButton.isDisplayed(), "Sign In button is not Displayed");
 
         assertEquals(webDriver.getCurrentUrl(),
                 "https://www.linkedin.com/feed/",
@@ -79,6 +75,8 @@ public class LinkedinLoginTest {
 
         webDriver.close();
     }
+
+
 
     @Test
     public void wrongEmailCorrectPasswordTest() {
