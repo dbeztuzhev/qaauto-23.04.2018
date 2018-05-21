@@ -1,9 +1,8 @@
 import org.openqa.selenium.WebDriver;
 
-import java.awt.*;
-
 public class LinkedinHomePage {
-    WebDriver webDriver;
+
+
     public LinkedinHomePage(WebDriver webDriver) {
         this.webDriver = webDriver;
     }

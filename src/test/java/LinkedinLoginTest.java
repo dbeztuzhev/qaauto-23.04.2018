@@ -5,22 +5,29 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import static java.lang.Thread.sleep;
-import static org.testng.Assert.*;
 
 public class LinkedinLoginTest {
-    WebDriver webDriver;
-
+    
     @BeforeMethod
     public void before() {
         webDriver = new FirefoxDriver();
         webDriver.get("https://www.linkedin.com/");
     }
 
-    @Test
-    public void successfulLoginTest() {
+    @DataProvider
+    public Object[][] ValidDataProvider() {
+        return new Object[][]{
+                { "db.hideez@gmail.com", "201101" },
+                { "DB.HIDEEZ@GMAIL.COM", "201101" },
+
+        };
+    }
+
+    @Test (dataProvider="ValidDataProvider")
+    public void successfulLoginTest(String email, String password) {
         LinkedinLoginPage linkedinLoginPage = new LinkedinLoginPage(webDriver);
         Assert.assertEquals(linkedinLoginPage.getCurrentTitle(),
                 "LinkedIn: Log In or Sign Up",
@@ -28,7 +35,7 @@ public class LinkedinLoginTest {
         Assert.assertTrue(linkedinLoginPage.isSignInButtonDisplayed(),
                 "Sign In button is not Displayed");
 
-        linkedinLoginPage.login("db.hideez@gmail.com", "201101");
+        linkedinLoginPage.login(email,password);
 
         LinkedinHomePage linkedinHomePage = new LinkedinHomePage(webDriver);
         Assert.assertEquals(linkedinHomePage.getCurrentUrl(),
@@ -40,7 +47,7 @@ public class LinkedinLoginTest {
 
     }
 
-    @Test
+    /*@Test
     public void notValidEmailCorrectPasswordTest() {
         LinkedinLoginPage linkedinLoginPage = new LinkedinLoginPage(webDriver);
 
@@ -124,7 +131,7 @@ public class LinkedinLoginTest {
     }
 
     @Test
-    public void correctEmailShortPasswordTest() throws InterruptedException {
+    public void negativReturnToLoginSubmitTest() throws InterruptedException {
 
         LinkedinLoginPage linkedinLoginPage = new LinkedinLoginPage(webDriver);
         Assert.assertEquals(linkedinLoginPage.getCurrentTitle(),
@@ -137,8 +144,12 @@ public class LinkedinLoginTest {
         sleep(3000);
 
         LinkedinLoginSubmitPage linkedinLoginSubmitPage = new LinkedinLoginSubmitPage(webDriver);
-
-        Assert.assertEquals(LinkedinLoginSubmitPage.getCurrentUrl(),
+        Assert.assertTrue(linkedinLoginSubmitPage.isPageLoaded(),
+                "Login-Submit page is not loaded");
+        Assert.assertEquals(linkedinLoginSubmitPage.getErrorMessageText(), "",
+                "Error message text is incorrect");
+    }
+        *//*Assert.assertEquals(LinkedinLoginSubmitPage.getCurrentUrl(),
                 "https://www.linkedin.com/uas/login-submit",
                 "Login-Submit page url is wrong");
 
@@ -155,8 +166,8 @@ public class LinkedinLoginTest {
         WebElement errorMessage2 = (webDriver.findElement(By.xpath("//*[@id=\"session_password-login-error\"]")));
         Assert.assertEquals(errorMessage2.getText(),
                 "The password you provided must have at least 6 characters.",
-                "Wrong error message text displayed.");
-    }
+                "Wrong error message text displayed.");*//*
+
 
     @Test
     public void correctEmailWrongPasswordTest() throws InterruptedException {
@@ -187,7 +198,7 @@ public class LinkedinLoginTest {
                 "There were one or more errors in your submission. Please correct the marked fields below.",
                 "Wrong error message text displayed.");
     }
-
+*/
     @AfterMethod
     public void after(){
         webDriver.close();
