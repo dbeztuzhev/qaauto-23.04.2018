@@ -30,12 +30,6 @@ public class LinkedinLoginPage extends LinkedinBasePage{
 
     }
 
-    public String getCurrentUrl() {
-        return webDriver.getCurrentUrl();
     }
-    public String getCurrentTitle() {
-        return webDriver.getTitle();
-    }
-}
 
         

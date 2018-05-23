@@ -4,14 +4,15 @@ public class LinkedinBasePage {
 
     protected WebDriver webDriver;
 
-    public LinkedinBasePage (WebDriver webDriver) {
-        super(webDriver);
+    public LinkedinBasePage(WebDriver webDriver) {
+        this.webDriver = webDriver;
     }
-    public String getCurrentUrl () {
+
+    public String getCurrentUrl() {
         return webDriver.getCurrentUrl();
     }
 
-    public String getCurrentTitle () {
+    public String getCurrentTitle() {
         return webDriver.getTitle();
     }
 }
