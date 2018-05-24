@@ -74,7 +74,7 @@ public class LinkedinLoginTest {
     }
 
     @Test (dataProvider="InvalidDataProviderLoginPage")
-    public void negativeLoginTestEmptyEmailEmptyPassword(String email, String password) throws InterruptedException {
+    public void negativeTestReturnedToLoginPage(String email, String password) throws InterruptedException {
 
         LinkedinLoginPage linkedinLoginPage = new LinkedinLoginPage(webDriver);
 
@@ -93,7 +93,7 @@ public class LinkedinLoginTest {
 
 
     @Test(dataProvider = "InvalidDataProviderLoginSubmitPage")
-    public void negativeReturnedToLoginSubmitPage(String email, String password) throws InterruptedException {
+    public void negativeTestReturnedToLoginSubmitPage(String email, String password) throws InterruptedException {
 
         LinkedinLoginPage linkedinLoginPage = new LinkedinLoginPage(webDriver);
 
@@ -118,17 +118,7 @@ public class LinkedinLoginTest {
                 "There were one or more errors in your submission. Please correct the marked fields below.",
                 "Error message text isn't displayed!!!");
 
-        /*Assert.assertTrue(linkedinLoginSubmitPage.isSubmitEmailFieldDisplayed(),
-                               "Submit Email Field isn't displayed!!!");
-        Assert.assertTrue(linkedinLoginSubmitPage.isSubmitPasswordFieldDisplayed(),
-                +                "Submit Password Field isn't displayed!!!");
-        if (linkedinLoginSubmitPage.isErrorEmailMessageDisplayed())
-            +        {
-                    +            Assert.assertEquals(linkedinLoginSubmitPage.isErrorEmailMessageTextDisplayed(),
-                            +                    "Please enter a valid email address.",
-                            +                    "Email Error message isn't displayed!!!");
-        +        }*/
-    }
+                    }
 
     @AfterMethod
     public void after() {
