@@ -22,7 +22,7 @@ public class LinkedinLoginTest {
     public Object[][] ValidDataProvider() {
         return new Object[][]{
                 { "db.hideez@gmail.com", "201101" },
-                { "DB.HIDEEZ@GMAIL.COM", "201101" },
+                //{ "DB.HIDEEZ@GMAIL.COM", "201101" },
 
         };
     }
@@ -59,9 +59,7 @@ public class LinkedinLoginTest {
         Assert.assertTrue(linkedinLoginPage.isSignInButtonDisplayed(),
                 "Sign In button is not Displayed");
 
-        linkedinLoginPage.login(email,password);
-
-        LinkedinHomePage linkedinHomePage = new LinkedinHomePage(webDriver);
+        LinkedinHomePage linkedinHomePage = linkedinLoginPage.login(email, password);
 
         Assert.assertEquals(linkedinHomePage.getCurrentUrl(),
                 "https://www.linkedin.com/feed/",
@@ -122,6 +120,7 @@ public class LinkedinLoginTest {
 
     @AfterMethod
     public void after() {
+        webDriver.close();
     }
 
 }
