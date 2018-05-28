@@ -94,7 +94,6 @@ public class LinkedinLoginTest {
 
     }
 
-
     @Test(dataProvider = "InvalidDataProviderLoginSubmitPage")
     public void negativeTestReturnedToLoginSubmitPage(String email, String password, WebElement emailField, WebElement passwordField, WebElement signInButton, WebElement errorMessage, WebElement errorMessage1) throws InterruptedException {
 
