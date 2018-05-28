@@ -1,4 +1,5 @@
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
@@ -13,16 +14,16 @@ public class LinkedinLoginTest {
     WebDriver webDriver;
 
     @BeforeMethod
-    public void before() throws InterruptedException {
+    public void before() {
         webDriver = new FirefoxDriver();
         webDriver.get("https://www.linkedin.com/");
-        }
+    }
 
     @DataProvider
     public Object[][] ValidDataProvider() {
         return new Object[][]{
                 { "db.hideez@gmail.com", "201101" },
-                //{ "DB.HIDEEZ@GMAIL.COM", "201101" },
+                { "DB.HIDEEZ@GMAIL.COM", "201101" },
 
         };
     }
@@ -48,9 +49,9 @@ public class LinkedinLoginTest {
 
 
     @Test (dataProvider="ValidDataProvider")
-    public void successfulLoginTest(String email, String password) throws InterruptedException {
+    public void successfulLoginTest(String email, String password, WebElement emailField, WebElement passwordField, WebElement signInButton) throws InterruptedException {
 
-        LinkedinLoginPage linkedinLoginPage = new LinkedinLoginPage(webDriver);
+        LinkedinLoginPage linkedinLoginPage = new LinkedinLoginPage(this.webDriver);
 
         Assert.assertEquals(linkedinLoginPage.getCurrentTitle(),
                 "LinkedIn: Log In or Sign Up",
@@ -72,11 +73,9 @@ public class LinkedinLoginTest {
     }
 
     @Test (dataProvider="InvalidDataProviderLoginPage")
-    public void negativeTestReturnedToLoginPage(String email, String password) throws InterruptedException {
+    public void negativeTestReturnedToLoginPage(String email, String password, WebElement emailField, WebElement passwordField, WebElement signInButton) throws InterruptedException {
 
-        LinkedinLoginPage linkedinLoginPage = new LinkedinLoginPage(webDriver);
-
-        linkedinLoginPage.login(email,password);
+        LinkedinLoginPage linkedinLoginPage = new LinkedinLoginPage(this.webDriver);
 
         sleep(3000);
 
@@ -87,19 +86,25 @@ public class LinkedinLoginTest {
         Assert.assertEquals(linkedinLoginPage.getCurrentUrl(),
                 "https://www.linkedin.com/",
                 "Login-Submit page URL is wrong!");
+
+        Assert.assertTrue(linkedinLoginPage.isSignInButtonDisplayed(),
+                "Sign In button is not Displayed");
+
+        linkedinLoginPage.login( email, password);
+
     }
 
 
     @Test(dataProvider = "InvalidDataProviderLoginSubmitPage")
-    public void negativeTestReturnedToLoginSubmitPage(String email, String password) throws InterruptedException {
+    public void negativeTestReturnedToLoginSubmitPage(String email, String password, WebElement emailField, WebElement passwordField, WebElement signInButton, WebElement errorMessage, WebElement errorMessage1) throws InterruptedException {
 
-        LinkedinLoginPage linkedinLoginPage = new LinkedinLoginPage(webDriver);
+        LinkedinLoginPage linkedinLoginPage = new LinkedinLoginPage(this.webDriver);
 
         linkedinLoginPage.login(email,password);
 
         sleep(3000);
 
-        LinkedinLoginSubmitPage linkedinLoginSubmitPage = new LinkedinLoginSubmitPage(webDriver);
+        LinkedinLoginSubmitPage linkedinLoginSubmitPage = new LinkedinLoginSubmitPage(this.webDriver);
 
         Assert.assertEquals(linkedinLoginSubmitPage.getCurrentTitle(),
                 "Sign In to LinkedIn",
@@ -116,7 +121,7 @@ public class LinkedinLoginTest {
                 "There were one or more errors in your submission. Please correct the marked fields below.",
                 "Error message text isn't displayed!!!");
 
-                    }
+    }
 
     @AfterMethod
     public void after() {

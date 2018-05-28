@@ -1,10 +1,12 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class LinkedinLoginPage extends LinkedinBasePage{
+public class LinkedinLoginPage extends LinkedinBasePage {
 
     @FindBy(id = "login-email")
     private WebElement emailField;
@@ -17,22 +19,21 @@ public class LinkedinLoginPage extends LinkedinBasePage{
 
     public LinkedinLoginPage(WebDriver webDriver) {
         super(webDriver);
-
         PageFactory.initElements(webDriver, this);
     }
 
-    public LinkedinHomePage login(String email,String password) {
+    public LinkedinHomePage login(String email, String password) {
         emailField.sendKeys(email);
         passwordField.sendKeys(password);
         signInButton.click();
-        return PageFactory.initElements(webDriver,LinkedinHomePage.class);
+        return PageFactory.initElements(webDriver, LinkedinHomePage.class);
+
     }
 
-    public boolean isSignInButtonDisplayed () {
+    public boolean isSignInButtonDisplayed() {
         return signInButton.isDisplayed();
-
     }
 
-    }
+}
 
         

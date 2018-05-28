@@ -1,13 +1,11 @@
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.PageFactory;
 
 public class LinkedinBasePage {
-
     protected WebDriver webDriver;
-    protected WebElement errorMessage;
-    protected WebElement emailField;
 
-    public LinkedinBasePage(WebDriver webDriver) {
+    public LinkedinBasePage (WebDriver webDriver) {
+        PageFactory.initElements(webDriver, this);
         this.webDriver = webDriver;
     }
 
@@ -17,13 +15,5 @@ public class LinkedinBasePage {
 
     public String getCurrentTitle() {
         return webDriver.getTitle();
-    }
-
-    public boolean isPageLoaded() {
-        return emailField.isDisplayed();
-    }
-
-    public String getErrorMessageText() {
-        return errorMessage.getText();
     }
 }
