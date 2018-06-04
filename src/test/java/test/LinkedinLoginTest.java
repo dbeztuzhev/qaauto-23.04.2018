@@ -1,14 +1,18 @@
-import org.openqa.selenium.*;
+package test;
+
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import page.LinkedinHomePage;
+import page.LinkedinLoginPage;
+import page.LinkedinLoginSubmitPage;
 
 import java.util.concurrent.TimeUnit;
 
-import static java.lang.Thread.sleep;
 
 public class LinkedinLoginTest {
     WebDriver webDriver;
@@ -16,7 +20,7 @@ public class LinkedinLoginTest {
     @BeforeMethod
     public void before(){
         webDriver = new FirefoxDriver();
-        //webDriver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
+        webDriver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS);
         webDriver.get("https://www.linkedin.com/");
     }
 
@@ -36,10 +40,10 @@ public class LinkedinLoginTest {
         Assert.assertEquals(linkedinLoginPage.getCurrentTitle(),
                 "LinkedIn: Log In or Sign Up","Login page wrong");
 
-        LinkedinHomePage linkedinHomePage = linkedinLoginPage.login(email, password);
-
-        Assert.assertTrue(linkedinLoginPage.isPageLoaded(),
+             Assert.assertTrue(linkedinLoginPage.isPageLoaded(),
                 "Login page is not loaded");
+
+        LinkedinHomePage linkedinHomePage = linkedinLoginPage.login(email, password);
 
         Assert.assertEquals(linkedinHomePage.getCurrentUrl(),
                 "https://www.linkedin.com/feed/", "Homepage URL is wrong.");
@@ -66,7 +70,7 @@ public class LinkedinLoginTest {
 
         LinkedinLoginSubmitPage linkedinLoginSubmitPage = linkedinLoginPage.login(email, password);
 
-        sleep(3000);
+      /*  linkedinLoginSubmitPage.waitUntilElementIsClickable();*/
 
         Assert.assertEquals(linkedinLoginSubmitPage.getCurrentUrl(),
                 "https://www.linkedin.com/uas/login-submit","login-submit URL is wrong.");
@@ -104,7 +108,7 @@ public class LinkedinLoginTest {
         Assert.assertTrue(linkedinLoginPage.isPageLoaded(),
                 "Login-Submit page is not loaded.");
 
-        sleep(3000);
+        linkedinLoginPage.waitUntilElementIsClickable();
 
         Assert.assertEquals(linkedinLoginPage.getCurrentTitle(),
                 "LinkedIn: Log In or Sign Up", "Login page wrong");
