@@ -8,7 +8,7 @@ import java.util.List;
 
 import static java.lang.Thread.sleep;
 
-public class DadCodExample {
+public class BadCodExample {
     public static void main(String args[]) throws InterruptedException {
         System.out.println("Hello world!");
         WebDriver webDriver = new FirefoxDriver();
